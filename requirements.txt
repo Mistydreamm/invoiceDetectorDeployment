@@ -1,0 +1,8 @@
+paddleocr
+paddlepaddle
+matplotlib
+opencv-python
+streamlit
+PyMuPDF
+
+
