@@ -4,7 +4,7 @@ import re
 import os
 # Lire le fichier de facture
 
-def sendPrompt():
+def sendPrompt(output_name):
     with open("ocr_results.txt", "r", encoding="utf-8") as f:
         contenu_fichier = f.read()
     
@@ -451,9 +451,12 @@ def sendPrompt():
     # Essai de parsing JSON
     try:
         data = json.loads(output)
-        with open("facture_analysee.json", "w", encoding="utf-8") as f:
+        with open(f"results/{output_name}.json", "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
-        print(" JSON valide enregistré dans facture_analysee.json")
+            
+            
+            
+        print(f" JSON valide enregistré dans ../results/{output_name}.json")
     except json.JSONDecodeError as e:
         print(" Erreur lors du parsing JSON :")
         print(e)

@@ -7,6 +7,7 @@ import numpy as np
 import os.path
 import detector
 import json
+import glob 
 
 # ---- OCR processing and detection ----
 
@@ -48,24 +49,14 @@ def pngOrPdf(filepath):
 
 st.title("Analyse de facture OCR avec extraction comptable")
 
-uploaded_file = st.file_uploader("📎 Uploadez une facture au format PDF ou PNG", type=["pdf", "png"])
 
-if uploaded_file is not None:
-    ext = uploaded_file.name.split(".")[-1].lower()
-    temp_path = f"temp_upload.{ext}"
+input_folder = "images"  # Nom du dossier contenant les fichiers
+file_paths = glob.glob(os.path.join(input_folder, "*.pdf")) + glob.glob(os.path.join(input_folder, "*.png"))
 
-    with open(temp_path, "wb") as f:
-        f.write(uploaded_file.read())
-
-    with st.spinner("📄 Analyse OCR en cours..."):
-        pngOrPdf(temp_path)
-
+for file_path in file_paths:
+    with st.spinner(f"📄 Analyse OCR de {os.path.basename(file_path)} en cours..."):
+        pngOrPdf(file_path)
     with st.spinner("🧠 Envoi au modèle pour extraction comptable..."):
-        detector.sendPrompt()
-
-# Affichage si le JSON existe
-if os.path.exists("facture_analysee.json"):
-    st.subheader("📊 Résultat de l'analyse (facture_analysee.json)")
-    with open("facture_analysee.json", "r", encoding="utf-8") as f:
-        result_json = json.load(f)
-        st.json(result_json)
+        basename = os.path.splitext(os.path.basename(file_path))[0]
+        detector.sendPrompt(basename)
+            

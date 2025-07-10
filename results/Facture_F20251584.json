@@ -1,0 +1,17 @@
+{
+  "type_depense": "restaurant",
+  "montant_ht": 84.0,
+  "tva_total": 14.0,
+  "taux_tva": [
+    20.0
+  ],
+  "montant_ttc": 98.0,
+  "compte_comptable": 625100,
+  "ventilation_tva": [
+    {
+      "taux": 20.0,
+      "montant_ht": 84.0,
+      "montant_tva": 14.0
+    }
+  ]
+}
